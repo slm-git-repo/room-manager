@@ -1,6 +1,13 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
 
+import { roomOptions } from "../utils";
+
+const roomKeys = Object.keys(roomOptions);
+const roomValues = roomKeys.map((key, index) => {
+  return roomOptions[index].label;
+});
+
 function RoomSelector(props) {
   const handleOnChange = event => {
     props.onRoomChange(event.target.id);
@@ -10,10 +17,15 @@ function RoomSelector(props) {
     <>
       <h5>Select a room:</h5>
       <div key="room-selector-radios" onChange={handleOnChange}>
-        <Form.Check type="radio" name="room-selector" id="1" label="Shark" />
-        <Form.Check type="radio" name="room-selector" id="2" label="Puffer" />
-        <Form.Check type="radio" name="room-selector" id="3" label="Carp" />
-        <Form.Check type="radio" name="room-selector" id="4" label="Bream" />
+        {roomKeys.map((key, index) => (
+          <Form.Check
+            key={index}
+            type="radio"
+            name="room-selector"
+            id={key}
+            label={roomValues[index]}
+          />
+        ))}
       </div>
     </>
   );

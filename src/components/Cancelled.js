@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Alert from "react-bootstrap/Alert";
 
-function Cancelled(props) {
+function Cancelled() {
   return (
     <>
       <div className="jumbotron">

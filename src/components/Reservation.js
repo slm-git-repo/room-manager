@@ -59,7 +59,9 @@ function Reservation(props) {
         <div className="user-form__room">
           <RoomSelector onRoomChange={onRoomChange} />
         </div>
-        <NameSelector onNameClick={onNameClick} />
+        <div className="user-form__name">
+          <NameSelector onNameClick={onNameClick} />
+        </div>
         <div className="break"></div>
         <div className="user-form__start-time">
           <h5>Select a start time:</h5>

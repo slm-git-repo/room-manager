@@ -17,8 +17,11 @@ div[class*=" user-form"],
   margin: 20px 0;
 }
 
-button.user-form__submit,
-.user-form__name button {
+.user-form__name {
+  width: 200px;
+}
+
+button.user-form__submit {
   background: linear-gradient(#4b1f6a, #b92d77);
   border: none;
   max-height: 50px;

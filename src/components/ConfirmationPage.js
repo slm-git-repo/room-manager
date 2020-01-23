@@ -11,7 +11,7 @@ function ConfirmationPage(props) {
       <div className="jumbotron">
         <h1>Room Manager</h1>
       </div>
-      <Alert variant="success">
+      <Alert variant="warning">
         Please confirm your information before reserving a room:
       </Alert>
       <div className="user-results">

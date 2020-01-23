@@ -1,6 +1,8 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
 
+import { getName, getRoom } from "../utils";
+
 function ResultsTable(props) {
   const data = props.data;
   const date = data.date;
@@ -19,23 +21,23 @@ function ResultsTable(props) {
       </thead>
       <tbody>
         <tr>
-          <td>Date (mm-dd-yy): </td>
+          <td>Date (mm-dd-yy):</td>
           <td>{date}</td>
         </tr>
         <tr>
-          <td>Room: </td>
-          <td>{room}</td>
+          <td>Room:</td>
+          <td>{getRoom(room)}</td>
         </tr>
         <tr>
-          <td>Name: </td>
-          <td>{name}</td>
+          <td>Name:</td>
+          <td>{getName(name)}</td>
         </tr>
         <tr>
-          <td>Start time: </td>
+          <td>Start time:</td>
           <td>{startTime}</td>
         </tr>
         <tr>
-          <td>End time: </td>
+          <td>End time:</td>
           <td>{endTime}</td>
         </tr>
       </tbody>
