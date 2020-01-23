@@ -21,7 +21,7 @@ function ResultsTable(props) {
       </thead>
       <tbody>
         <tr>
-          <td>Date (mm-dd-yy):</td>
+          <td>Date (mm/dd/yy):</td>
           <td>{date}</td>
         </tr>
         <tr>

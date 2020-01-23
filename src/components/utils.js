@@ -13,12 +13,12 @@ const roomOptions = [
 
 const getName = id => {
   const selected = nameOptions.filter(el => el.id === id);
-  return selected[0].label;
+  if (selected[0]) return selected[0].label;
 };
 
 const getRoom = id => {
   const selected = roomOptions.filter(el => el.id === id);
-  return selected[0].label;
+  if (selected[0]) return selected[0].label;
 };
 
 export { nameOptions, roomOptions, getName, getRoom };

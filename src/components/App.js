@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect, useHistory } from "react-router-dom";
 
 import "./App.css";
 import Reservation from "./Reservation";
@@ -7,11 +7,15 @@ import ConfirmationPage from "./ConfirmationPage";
 import Confirmed from "./Confirmed";
 import Cancelled from "./Cancelled";
 
-function App() {
+function App(props) {
   const [data, setData] = useState("");
+  let history = useHistory();
 
   const onReserve = data => {
     setData(data);
+    
+    // navigate to /confirm
+    history.push("/confirm");
   };
 
   return (

@@ -5,7 +5,7 @@ import { nameOptions } from "../utils";
 
 function NameSelector(props) {
   const handleOnClick = event => {
-    props.onNameClick(event.value);
+    props.onNameClick(event.id);
   };
 
   return (
