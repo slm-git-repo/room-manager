@@ -1,25 +1,31 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 
 import Calendar from "react-calendar";
 import TimePicker from "react-time-picker";
 
-import "./Reservation.css";
 import RoomSelector from "./form/RoomSelector";
+import NameSelector from "./form/NameSelector";
 
-function Reservation() {
+function Reservation(props) {
+  const [date, setDate] = useState();
   const [room, setRoom] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [name, setName] = useState("");
   const [startTime, setStartTime] = useState("09:00:00");
   const [endTime, setEndTime] = useState("18:00:00");
+
+  const onCalendarChange = date => {
+    setDate(date.toLocaleDateString());
+  };
 
   const onRoomChange = id => {
     setRoom(id);
   };
 
-  const onCalendarChange = date => {
-    setDate(date.toLocaleDateString());
+  const onNameClick = id => {
+    setName(id);
   };
 
   const onStartTimeChange = value => {
@@ -31,7 +37,8 @@ function Reservation() {
   };
 
   const onButtonClick = event => {
-    console.log({
+    props.onReserve({
+      name: name,
       room: room,
       date: date,
       startTime: startTime,
@@ -45,40 +52,15 @@ function Reservation() {
         <h1>Room Manager</h1>
       </div>
       <Form className="user-form">
-        <div className="user-form__room">
-          <RoomSelector onRoomChange={onRoomChange} />
-          {/* <h5>Select a room:</h5>
-          <div key="room-selector-radios" onChange={onRoomChange}>
-            <Form.Check
-              type="radio"
-              name="room-selector"
-              id="1"
-              label="Shark"
-            />
-            <Form.Check
-              type="radio"
-              name="room-selector"
-              id="2"
-              label="Puffer"
-            />
-            <Form.Check
-              type="radio"
-              name="room-selector"
-              id="3"
-              label="Clownfish"
-            />
-            <Form.Check
-              type="radio"
-              name="room-selector"
-              id="4"
-              label="Bream"
-            />
-          </div> */}
-        </div>
         <div className="user-form__calendar">
           <h5>Select a date:</h5>
           <Calendar onChange={onCalendarChange} />
         </div>
+        <div className="user-form__room">
+          <RoomSelector onRoomChange={onRoomChange} />
+        </div>
+        <NameSelector onNameClick={onNameClick} />
+        <div className="break"></div>
         <div className="user-form__start-time">
           <h5>Select a start time:</h5>
           <TimePicker
@@ -97,13 +79,9 @@ function Reservation() {
             onChange={onEndTimeChange}
           />
         </div>
-        <Button
-          className="user-form__submit"
-          variant="primary"
-          onClick={onButtonClick}
-        >
-          Reserve room
-        </Button>
+        <Link to="/confirm" onClick={onButtonClick}>
+          <Button className="user-form__submit">Submit</Button>
+        </Link>
       </Form>
     </>
   );
