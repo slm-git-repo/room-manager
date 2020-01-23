@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
@@ -37,7 +36,6 @@ function Reservation(props) {
     setEndTime(value);
   };
 
-  // const errors = [];
   const [errors, setErrors] = useState([]);
 
   const onButtonClick = event => {
@@ -64,18 +62,6 @@ function Reservation(props) {
       setErrors([...errors, "end time"]);
     }
 
-    // setState(prevState => ({
-    //   arrayvar: [...prevState.arrayvar, newelement]
-    // }))
-
-    // if (!name) errors.push("name");
-    // if (!room) errors.push("room");
-    // if (!date) errors.push("date");
-    // if (!startTime) errors.push("startTime");
-    // if (!endTime) errors.push("endTime");
-
-    console.log(errors);
-
     if (!errorred) {
       setErrors([]);
       props.onReserve({
@@ -85,8 +71,6 @@ function Reservation(props) {
         startTime: startTime,
         endTime: endTime
       });
-      // window.location.assign("/confirm");
-      // this.context.router.push("/confirm");
     }
   };
 
@@ -107,9 +91,6 @@ function Reservation(props) {
       <div className="jumbotron">
         <h1>Room Manager</h1>
       </div>
-      {/* {errors.map(name => (
-        <Alert variant="danger">Please enter a valid {name}</Alert>
-      ))} */}
       {getAlerts()}
       <Form className="user-form">
         <div className="user-form__calendar">
@@ -144,9 +125,6 @@ function Reservation(props) {
         <Button className="user-form__submit" onClick={onButtonClick}>
           Submit
         </Button>
-        {/* <Link to="/confirm" onClick={onButtonClick}>
-          <Button className="user-form__submit">Submit</Button>
-        </Link> */}
       </Form>
     </>
   );

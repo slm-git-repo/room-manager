@@ -13,8 +13,6 @@ function App(props) {
 
   const onReserve = data => {
     setData(data);
-    
-    // navigate to /confirm
     history.push("/confirm");
   };
 
