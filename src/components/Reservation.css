@@ -1,0 +1,23 @@
+.jumbotron {
+  background: linear-gradient(#4b1f6a, #b92d77);
+  color: #fff;
+}
+
+.user-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+div[class^="user-form"],
+div[class*=" user-form"],
+.user-form__submit {
+  display: inline-block;
+  margin: 20px 0;
+}
+
+button.user-form__submit {
+  background: linear-gradient(#4b1f6a, #b92d77);
+  border: none;
+  max-height: 50px;
+}
