@@ -13,10 +13,13 @@ function Reservation(props) {
   const [date, setDate] = useState();
   const [room, setRoom] = useState("");
   const [name, setName] = useState("");
-  const [startTime, setStartTime] = useState("09:00:00");
-  const [endTime, setEndTime] = useState("18:00:00");
+  const [startTime, setStartTime] = useState("09:00");
+  const [endTime, setEndTime] = useState("18:00");
 
   const onCalendarChange = date => {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    if (date < yesterday) return;
     setDate(date.toLocaleDateString());
   };
 
@@ -39,10 +42,9 @@ function Reservation(props) {
   const [errors, setErrors] = useState([]);
 
   const onButtonClick = event => {
-    // input validation here
+    // input validation
     let errorred = false;
     setErrors([]);
-    console.log(errors);
 
     if (!name) {
       errorred = true;
@@ -64,7 +66,6 @@ function Reservation(props) {
       errorred = true;
       setErrors([...errors, "end time"]);
     }
-    console.log(errors);
 
     if (!errorred) {
       props.onReserve({
