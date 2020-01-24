@@ -29,11 +29,11 @@ function Reservation(props) {
   };
 
   const onStartTimeChange = value => {
-    setStartTime(value);
+    setStartTime(value.substring(0, 5));
   };
 
   const onEndTimeChange = value => {
-    setEndTime(value);
+    setEndTime(value.substring(0, 5));
   };
 
   const [errors, setErrors] = useState([]);
@@ -41,6 +41,9 @@ function Reservation(props) {
   const onButtonClick = event => {
     // input validation here
     let errorred = false;
+    setErrors([]);
+    console.log(errors);
+
     if (!name) {
       errorred = true;
       setErrors([...errors, "name"]);
@@ -61,9 +64,9 @@ function Reservation(props) {
       errorred = true;
       setErrors([...errors, "end time"]);
     }
+    console.log(errors);
 
     if (!errorred) {
-      setErrors([]);
       props.onReserve({
         name: name,
         room: room,
@@ -71,6 +74,11 @@ function Reservation(props) {
         startTime: startTime,
         endTime: endTime
       });
+      setDate();
+      setRoom("");
+      setName("");
+      setStartTime("09:00:00");
+      setEndTime("18:00:00");
     }
   };
 
