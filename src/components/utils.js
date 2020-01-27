@@ -64,7 +64,7 @@ const isRoomTaken = (reservations, room, date, startTime, endTime) => {
     return dateString === date && roomId === room;
   });
 
-  // there are 4 overlapping possibilities
+  // there are 5 overlapping possibilities
   const overlaps = filteredRes.map(res => {
     const resStartTime = getDateTime(
       new Date(res.data).toLocaleDateString(),
@@ -100,10 +100,22 @@ const isRoomTaken = (reservations, room, date, startTime, endTime) => {
       (resStartTime.isBefore(thisStartTime, "minute") &&
         resEndTime.isAfter(thisStartTime, "minute"));
 
+    // 5) thisStartTime or thisEndTime is equal to that of an existing reservation
+    overlap =
+      overlap ||
+      resStartTime.isSame(thisStartTime, "minute") ||
+      resEndTime.isSame(thisEndTime, "minute");
+
     return overlap;
   });
   const reducer = (acc, curr) => acc || curr;
   return overlaps.reduce(reducer, false);
+};
+
+const isTimeIntervalValid = (date, startTime, endTime) => {
+  const start = getDateTime(date, startTime);
+  const end = getDateTime(date, endTime);
+  return start.isBefore(end);
 };
 
 const getDateTime = (date, time) => {
@@ -121,13 +133,19 @@ const getAlerts = errors => {
         Selected room already reserved for the chosen time.
       </Alert>
     );
-  } else {
-    return errors.map(err => (
-      <Alert key={err} variant="danger">
-        Please enter a valid {err}.
-      </Alert>
-    ));
   }
+  if (errors.includes("invalidTimes")) {
+    return (
+      <Alert variant="danger">
+        Invalid time interval: the start time must be before the end time.
+      </Alert>
+    );
+  }
+  return errors.map(err => (
+    <Alert key={err} variant="danger">
+      Please enter a valid {err}.
+    </Alert>
+  ));
 };
 
 export {
@@ -138,5 +156,6 @@ export {
   databaseTimeToUserTime,
   getErrors,
   isRoomTaken,
+  isTimeIntervalValid,
   getAlerts
 };

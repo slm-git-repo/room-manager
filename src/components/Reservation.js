@@ -8,7 +8,12 @@ import TimePicker from "react-time-picker";
 import RoomSelector from "./form/RoomSelector";
 import NameSelector from "./form/NameSelector";
 import ExistingReservations from "./form/ExistingReservations";
-import { getErrors, isRoomTaken, getAlerts } from "./utils";
+import {
+  getErrors,
+  isRoomTaken,
+  isTimeIntervalValid,
+  getAlerts
+} from "./utils";
 
 function Reservation(props) {
   const [date, setDate] = useState();
@@ -43,7 +48,12 @@ function Reservation(props) {
   const [errors, setErrors] = useState([]);
 
   const onButtonClick = event => {
-    const errors = getErrors(name, room, date, startTime, endTime);
+    const valid = isTimeIntervalValid(date, startTime, endTime);
+    if (!valid) {
+      setErrors("invalidTimes");
+      return;
+    }
+
     const isTaken = isRoomTaken(
       props.reservations,
       room,
@@ -51,12 +61,12 @@ function Reservation(props) {
       startTime,
       endTime
     );
-
     if (isTaken) {
       setErrors("roomTaken");
       return;
     }
 
+    const errors = getErrors(name, room, date, startTime, endTime);
     if (errors.length !== 0) {
       setErrors(errors);
     } else {
