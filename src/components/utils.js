@@ -1,7 +1,8 @@
 const nameOptions = [
   { id: "1", label: "Bárbara Ribeiro" },
   { id: "2", label: "Catarina Curioso" },
-  { id: "3", label: "Sérgio Machado" }
+  { id: "3", label: "Sérgio Machado" },
+  { id: "4", label: "Marcelo Mattos" }
 ];
 
 const roomOptions = [

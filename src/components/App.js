@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Switch, Redirect, useHistory } from "react-router-dom";
 
 import "./App.css";
@@ -7,14 +7,27 @@ import ConfirmationPage from "./ConfirmationPage";
 import Confirmed from "./Confirmed";
 import Cancelled from "./Cancelled";
 
+import { getReservations } from "../api/reservations";
+
 function App(props) {
   const [data, setData] = useState("");
   let history = useHistory();
 
   const onReserve = data => {
     setData(data);
+    // use day.js to see if overlpas with any reservation in reservations
+    // const date = data.date;
+    // const startTime = data.
+
     history.push("/confirm");
   };
+
+  const [reservations, setReservations] = useState([]);
+
+  useEffect(() => {
+    getReservations().then(setReservations);
+    setInterval(() => getReservations().then(setReservations), 30000);
+  }, []);
 
   return (
     <div className="container-fluid">
@@ -22,7 +35,13 @@ function App(props) {
         <Route
           path="/"
           exact
-          render={props => <Reservation {...props} onReserve={onReserve} />}
+          render={props => (
+            <Reservation
+              {...props}
+              onReserve={onReserve}
+              reservations={reservations}
+            />
+          )}
         />
         <Route
           path="/confirm"

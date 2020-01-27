@@ -8,6 +8,7 @@ import TimePicker from "react-time-picker";
 
 import RoomSelector from "./form/RoomSelector";
 import NameSelector from "./form/NameSelector";
+import ExistingReservations from "./form/ExistingReservations";
 
 function Reservation(props) {
   const [date, setDate] = useState();
@@ -43,31 +44,12 @@ function Reservation(props) {
 
   const onButtonClick = event => {
     // input validation
-    let errorred = false;
-    setErrors([]);
+    const errors = getErrors(name, room, date, startTime, endTime);
+    const isFree = isRoomFree(room, date, startTime, endTime)
 
-    if (!name) {
-      errorred = true;
-      setErrors([...errors, "name"]);
-    }
-    if (!room) {
-      errorred = true;
-      setErrors([...errors, "room"]);
-    }
-    if (!date) {
-      errorred = true;
-      setErrors([...errors, "date"]);
-    }
-    if (!startTime) {
-      errorred = true;
-      setErrors([...errors, "start time"]);
-    }
-    if (!endTime) {
-      errorred = true;
-      setErrors([...errors, "end time"]);
-    }
-
-    if (!errorred) {
+    if (errors.length !== 0) {
+      setErrors(errors);
+    } else {
       props.onReserve({
         name: name,
         room: room,
@@ -78,28 +60,59 @@ function Reservation(props) {
       setDate();
       setRoom("");
       setName("");
-      setStartTime("09:00:00");
-      setEndTime("18:00:00");
+      setStartTime("09:00");
+      setEndTime("18:00");
     }
   };
 
-  const getAlerts = () => {
-    const alerts = [];
-    for (let i = 0; i < errors.length; i++) {
-      alerts.push(
-        <Alert key={i} variant="danger">
-          Please enter a valid {errors[i]}.
-        </Alert>
-      );
+  const getErrors = (name, room, date, startTime, endTime) => {
+    let errors = [];
+    if (!name) {
+      errors = [...errors, "name"];
     }
-    return alerts;
+    if (!room) {
+      errors = [...errors, "room"];
+    }
+    if (!date) {
+      errors = [...errors, "date"];
+    }
+    if (!startTime) {
+      errors = [...errors, "start time"];
+    }
+    if (!endTime) {
+      errors = [...errors, "end time"];
+    }
+    return errors;
   };
+
+  const isRoomFree = (room, date, startTime, endTime) => {
+    const existingRes = props.reservations;
+
+    // get reservations that match the date and room
+    const filteredRes = existingRes.filter(res => {
+      const dateString = new Date(res.data).toLocaleDateString();
+      const roomId = res.salaID.toString();
+      return dateString === date && roomId === room;
+    });
+  };
+
+  const getAlerts = () =>
+    errors.map(err => (
+      <Alert key={err} variant="danger">
+        Please enter a valid {err}.
+      </Alert>
+    ));
 
   return (
     <>
       <div className="jumbotron">
         <h1>Room Manager</h1>
       </div>
+      <ExistingReservations
+        roomId={room}
+        date={date}
+        reservations={props.reservations}
+      />
       {getAlerts()}
       <Form className="user-form">
         <div className="user-form__calendar">

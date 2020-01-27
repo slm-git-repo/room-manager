@@ -31,3 +31,8 @@ button.user-form__submit {
   flex-basis: 100%;
   height: 0;
 }
+
+summary {
+  font-weight: bolder;
+  color: #4b1f6a;
+}
