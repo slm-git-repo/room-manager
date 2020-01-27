@@ -1,7 +1,7 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
 
-import { getName } from "../utils";
+import { getName, databaseTimeToUserTime } from "../utils";
 
 function ExistingReservations(props) {
   // get reservation from web api
@@ -26,20 +26,8 @@ function ExistingReservations(props) {
     for (let i = 0; i < reservations.length; i++) {
       const res = reservations[i];
       const name = getName(res.usuarioID.toString());
-
-      const dateIn = new Date(res.checkIn);
-      let startTimeHours = dateIn.getHours().toString();
-      if (startTimeHours.length === 1) startTimeHours = `0${startTimeHours}`;
-      let startTimeMins = dateIn.getMinutes().toString();
-      if (startTimeMins.length === 1) startTimeMins = `0${startTimeMins}`;
-      const startTime = `${startTimeHours}:${startTimeMins}`;
-
-      const dateOut = new Date(res.checkOut);
-      let endTimeHours = dateOut.getHours().toString();
-      if (endTimeHours.length === 1) endTimeHours = `0${endTimeHours}`;
-      let endTimeMins = dateOut.getMinutes().toString();
-      if (endTimeMins.length === 1) endTimeMins = `0${endTimeMins}`;
-      const endTime = `${endTimeHours}:${endTimeMins}`;
+      const startTime = databaseTimeToUserTime(res.checkIn);
+      const endTime = databaseTimeToUserTime(res.checkOut);
 
       rows.push(
         <tr key={res.reservaID}>
