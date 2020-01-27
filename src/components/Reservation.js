@@ -38,16 +38,24 @@ function Reservation(props) {
   };
 
   const onStartTimeChange = value => {
-    setStartTime(value.substring(0, 5));
+    if (value) setStartTime(value.substring(0, 5));
+    else setStartTime(null);
   };
 
   const onEndTimeChange = value => {
-    setEndTime(value.substring(0, 5));
+    if (value) setEndTime(value.substring(0, 5));
+    else setEndTime(null);
   };
 
   const [errors, setErrors] = useState([]);
 
   const onButtonClick = event => {
+    const errors = getErrors(name, room, date, startTime, endTime);
+    if (errors.length !== 0) {
+      setErrors(errors);
+      return;
+    }
+
     const valid = isTimeIntervalValid(date, startTime, endTime);
     if (!valid) {
       setErrors("invalidTimes");
@@ -66,23 +74,18 @@ function Reservation(props) {
       return;
     }
 
-    const errors = getErrors(name, room, date, startTime, endTime);
-    if (errors.length !== 0) {
-      setErrors(errors);
-    } else {
-      props.onReserve({
-        name: name,
-        room: room,
-        date: date,
-        startTime: startTime,
-        endTime: endTime
-      });
-      setDate();
-      setRoom("");
-      setName("");
-      setStartTime("09:00");
-      setEndTime("18:00");
-    }
+    props.onReserve({
+      name: name,
+      room: room,
+      date: date,
+      startTime: startTime,
+      endTime: endTime
+    });
+    setDate();
+    setRoom("");
+    setName("");
+    setStartTime("09:00");
+    setEndTime("18:00");
   };
 
   return (
