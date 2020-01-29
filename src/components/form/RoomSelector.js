@@ -1,17 +1,15 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
 
-import { roomOptions } from "../utils";
-
-const objKeys = Object.keys(roomOptions);
-const roomIds = objKeys.map(key => {
-  return roomOptions[key].id;
-});
-const roomValues = objKeys.map(key => {
-  return roomOptions[key].label;
-});
+// import { roomOptions } from "../utils";
+import { getRooms } from "../utils";
 
 function RoomSelector(props) {
+  const rooms = getRooms(props.rooms);
+  const objKeys = Object.keys(rooms);
+  const roomIds = objKeys.map(key => rooms[key].id);
+  const roomValues = objKeys.map(key => rooms[key].label);
+
   const handleOnChange = event => {
     props.onRoomChange(event.target.id);
   };

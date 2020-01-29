@@ -97,6 +97,7 @@ function Reservation(props) {
         roomId={room}
         date={date}
         reservations={props.reservations}
+        users={props.users}
       />
       {getAlerts(errors)}
       <Form className="user-form">
@@ -105,10 +106,10 @@ function Reservation(props) {
           <Calendar onChange={onCalendarChange} />
         </div>
         <div className="user-form__room">
-          <RoomSelector onRoomChange={onRoomChange} />
+          <RoomSelector onRoomChange={onRoomChange} rooms={props.rooms} />
         </div>
         <div className="user-form__name">
-          <NameSelector onNameClick={onNameClick} />
+          <NameSelector onNameClick={onNameClick} users={props.users} />
         </div>
         <div className="break"></div>
         <div className="user-form__start-time">

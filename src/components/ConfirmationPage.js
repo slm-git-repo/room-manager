@@ -15,7 +15,11 @@ function ConfirmationPage(props) {
         Please confirm your information before reserving a room:
       </Alert>
       <div className="user-results">
-        <ResultsTable data={props.data} />
+        <ResultsTable
+          data={props.data}
+          rooms={props.rooms}
+          users={props.users}
+        />
         <Link to="/confirmed">
           <Button className="user-results__confirmed" variant="primary">
             Reserve room

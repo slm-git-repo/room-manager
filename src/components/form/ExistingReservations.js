@@ -25,9 +25,9 @@ function ExistingReservations(props) {
     const rows = [];
     for (let i = 0; i < reservations.length; i++) {
       const res = reservations[i];
-      const name = getName(res.usuarioID.toString());
-      const startTime = databaseTimeToUserTime(res.checkIn);
-      const endTime = databaseTimeToUserTime(res.checkOut);
+      const name = getName(props.users, res.usuarioID.toString());
+      const startTime = databaseTimeToUserTime(res.horaEntrada);
+      const endTime = databaseTimeToUserTime(res.horaSaida);
 
       rows.push(
         <tr key={res.reservaID}>

@@ -26,11 +26,11 @@ function ResultsTable(props) {
         </tr>
         <tr>
           <td>Room:</td>
-          <td>{getRoom(room)}</td>
+          <td>{getRoom(props.rooms, room)}</td>
         </tr>
         <tr>
           <td>Name:</td>
-          <td>{getName(name)}</td>
+          <td>{getName(props.users, name)}</td>
         </tr>
         <tr>
           <td>Start time:</td>

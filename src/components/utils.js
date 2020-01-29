@@ -3,29 +3,45 @@ import Alert from "react-bootstrap/Alert";
 
 import dayjs from "dayjs";
 
-const nameOptions = [
-  { id: "1", label: "Bárbara Ribeiro" },
-  { id: "2", label: "Catarina Curioso" },
-  { id: "3", label: "Sérgio Machado" },
-  { id: "4", label: "Marcelo Mattos" }
-];
+// const nameOptions = [
+//   { id: "1", label: "Bárbara Ribeiro" },
+//   { id: "2", label: "Catarina Curioso" },
+//   { id: "3", label: "Sérgio Machado" },
+//   { id: "4", label: "Marcelo Mattos" }
+// ];
 
-const roomOptions = [
-  { id: "1", label: "Shark" },
-  { id: "2", label: "Puffer" },
-  { id: "3", label: "Carp" },
-  { id: "4", label: "Bream" }
-];
+// const roomOptions = [
+//   { id: "1", label: "Shark" },
+//   { id: "2", label: "Puffer" },
+//   { id: "3", label: "Carp" },
+//   { id: "4", label: "Bream" }
+// ];
 
-const getName = id => {
-  const selected = nameOptions.filter(el => el.id === id);
-  if (selected[0]) return selected[0].label;
+const getName = (names, id) => {
+  const selected = names.filter(
+    el => el.usuarioID.toString() === id.toString()
+  );
+  const first = selected[0];
+  if (first) return `${first.primeironome} ${first.sobrenome}`;
 };
 
-const getRoom = id => {
-  const selected = roomOptions.filter(el => el.id === id);
-  if (selected[0]) return selected[0].label;
+const getNames = users =>
+  users.map(el => ({
+    id: el.usuarioID,
+    label: `${el.primeironome} ${el.sobrenome}`
+  }));
+
+const getRoom = (rooms, id) => {
+  const selected = rooms.filter(el => el.salaID.toString() === id.toString());
+  const first = selected[0];
+  if (first) return first.nome;
 };
+
+const getRooms = rooms =>
+  rooms.map(el => ({
+    id: el.salaID,
+    label: el.nome
+  }));
 
 const databaseTimeToUserTime = databaseTime => {
   const date = new Date(databaseTime);
@@ -68,11 +84,11 @@ const isRoomTaken = (reservations, room, date, startTime, endTime) => {
   const overlaps = filteredRes.map(res => {
     const resStartTime = getDateTime(
       new Date(res.data).toLocaleDateString(),
-      databaseTimeToUserTime(res.checkIn)
+      databaseTimeToUserTime(res.horaEntrada)
     );
     const resEndTime = getDateTime(
       new Date(res.data).toLocaleDateString(),
-      databaseTimeToUserTime(res.checkOut)
+      databaseTimeToUserTime(res.horaSaida)
     );
     const thisStartTime = getDateTime(date, startTime);
     const thisEndTime = getDateTime(date, endTime);
@@ -149,10 +165,12 @@ const getAlerts = errors => {
 };
 
 export {
-  nameOptions,
-  roomOptions,
+  // nameOptions,
+  // roomOptions,
   getName,
+  getNames,
   getRoom,
+  getRooms,
   databaseTimeToUserTime,
   getErrors,
   isRoomTaken,
