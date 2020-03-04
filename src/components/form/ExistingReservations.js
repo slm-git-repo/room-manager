@@ -1,7 +1,7 @@
-import React from "react";
-import Table from "react-bootstrap/Table";
+import React from 'react';
+import Table from 'react-bootstrap/Table';
 
-import { getName, databaseTimeToUserTime } from "../utils";
+import { getName, databaseTimeToUserTime } from '../utils';
 
 function ExistingReservations(props) {
   // get reservation from web api
@@ -11,7 +11,7 @@ function ExistingReservations(props) {
   const filteredRes = existingRes.filter(res => {
     const date = res.data;
     const dateString = new Date(date).toLocaleDateString();
-    const room = res.salaID.toString();
+    const room = res.salaId.toString();
     return dateString === props.date && room === props.roomId;
   });
 
@@ -25,12 +25,12 @@ function ExistingReservations(props) {
     const rows = [];
     for (let i = 0; i < reservations.length; i++) {
       const res = reservations[i];
-      const name = getName(props.users, res.usuarioID.toString());
+      const name = getName(props.users, res.usuarioId.toString());
       const startTime = databaseTimeToUserTime(res.horaEntrada);
       const endTime = databaseTimeToUserTime(res.horaSaida);
 
       rows.push(
-        <tr key={res.reservaID}>
+        <tr key={res.reservaId}>
           <td>{name}</td>
           <td>{startTime}</td>
           <td>{endTime}</td>
@@ -43,7 +43,7 @@ function ExistingReservations(props) {
   return (
     <details>
       <summary>Existing reservations for this date and room</summary>
-      <Table striped bordered hover size="sm">
+      <Table striped bordered hover size='sm'>
         <thead>
           <tr>
             <th>Name</th>

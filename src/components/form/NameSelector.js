@@ -1,12 +1,11 @@
-import React from "react";
-import Select from "react-select";
+import React from 'react';
+import Select from 'react-select';
 
-// import { nameOptions } from "../utils";
-import { getNames } from "../utils";
+import { getNames } from '../utils';
 
 function NameSelector(props) {
   const handleOnClick = event => {
-    props.onNameClick(event.id);
+    props.onNameClick(event.value);
   };
 
   return (

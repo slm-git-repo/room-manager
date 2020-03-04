@@ -1,26 +1,26 @@
-import React, { useState } from "react";
-import { Button } from "react-bootstrap";
-import Form from "react-bootstrap/Form";
+import React, { useState } from 'react';
+import { Button } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
 
-import Calendar from "react-calendar";
-import TimePicker from "react-time-picker";
+import Calendar from 'react-calendar';
+import TimePicker from 'react-time-picker';
 
-import RoomSelector from "./form/RoomSelector";
-import NameSelector from "./form/NameSelector";
-import ExistingReservations from "./form/ExistingReservations";
+import RoomSelector from './form/RoomSelector';
+import NameSelector from './form/NameSelector';
+import ExistingReservations from './form/ExistingReservations';
 import {
   getErrors,
   isRoomTaken,
   isTimeIntervalValid,
   getAlerts
-} from "./utils";
+} from './utils';
 
 function Reservation(props) {
   const [date, setDate] = useState();
-  const [room, setRoom] = useState("");
-  const [name, setName] = useState("");
-  const [startTime, setStartTime] = useState("09:00");
-  const [endTime, setEndTime] = useState("18:00");
+  const [room, setRoom] = useState('');
+  const [name, setName] = useState('');
+  const [startTime, setStartTime] = useState('09:00');
+  const [endTime, setEndTime] = useState('18:00');
 
   const onCalendarChange = date => {
     const yesterday = new Date();
@@ -58,7 +58,7 @@ function Reservation(props) {
 
     const valid = isTimeIntervalValid(date, startTime, endTime);
     if (!valid) {
-      setErrors("invalidTimes");
+      setErrors('invalidTimes');
       return;
     }
 
@@ -70,7 +70,7 @@ function Reservation(props) {
       endTime
     );
     if (isTaken) {
-      setErrors("roomTaken");
+      setErrors('roomTaken');
       return;
     }
 
@@ -82,15 +82,15 @@ function Reservation(props) {
       endTime: endTime
     });
     setDate();
-    setRoom("");
-    setName("");
-    setStartTime("09:00");
-    setEndTime("18:00");
+    setRoom('');
+    setName('');
+    setStartTime('09:00');
+    setEndTime('18:00');
   };
 
   return (
     <>
-      <div className="jumbotron">
+      <div className='jumbotron'>
         <h1>Room Manager</h1>
       </div>
       <ExistingReservations
@@ -100,37 +100,37 @@ function Reservation(props) {
         users={props.users}
       />
       {getAlerts(errors)}
-      <Form className="user-form">
-        <div className="user-form__calendar">
+      <Form className='user-form'>
+        <div className='user-form__calendar'>
           <h5>Select a date:</h5>
           <Calendar onChange={onCalendarChange} />
         </div>
-        <div className="user-form__room">
+        <div className='user-form__room'>
           <RoomSelector onRoomChange={onRoomChange} rooms={props.rooms} />
         </div>
-        <div className="user-form__name">
+        <div className='user-form__name'>
           <NameSelector onNameClick={onNameClick} users={props.users} />
         </div>
-        <div className="break"></div>
-        <div className="user-form__start-time">
+        <div className='break'></div>
+        <div className='user-form__start-time'>
           <h5>Select a start time:</h5>
           <TimePicker
-            format="HH:mm"
+            format='HH:mm'
             disableClock
             value={startTime}
             onChange={onStartTimeChange}
           />
         </div>
-        <div className="user-form__end-time">
+        <div className='user-form__end-time'>
           <h5>Select an end time:</h5>
           <TimePicker
-            format="HH:mm"
+            format='HH:mm'
             disableClock
             value={endTime}
             onChange={onEndTimeChange}
           />
         </div>
-        <Button className="user-form__submit" onClick={onButtonClick}>
+        <Button className='user-form__submit' onClick={onButtonClick}>
           Submit
         </Button>
       </Form>
