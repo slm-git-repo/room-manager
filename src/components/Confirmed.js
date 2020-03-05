@@ -8,15 +8,6 @@ function Confirmed(props) {
   const postUrl = `http://localhost:5000/api/reservas/${props.data.name}/sala/${props.data.room}`;
   xhr.open('POST', postUrl, true);
   xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-  xhr.setRequestHeader(
-    'Access-Control-Allow-Methods',
-    'PUT, GET, POST, DELETE, OPTIONS'
-  );
-  xhr.setRequestHeader(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-  );
   xhr.send(
     JSON.stringify({
       data: props.data.date,
