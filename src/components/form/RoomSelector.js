@@ -21,6 +21,7 @@ function RoomSelector(props) {
             name='room-selector'
             id={val.id}
             label={val.label}
+            defaultChecked={index === 0}
           />
         ))}
       </div>
